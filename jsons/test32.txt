@@ -1,0 +1,4 @@
+{"id":12,"latitude":"27°3'52S","longitude":"25°60'10W","temperature":6,"battery":57,"weight":3036}
+{"id":32,"latitude":"63°38'56N","longitude":"85°37'57N","temperature":20,"battery":86,"weight":2005}
+{"id":25,"latitude":"69°16'16W","longitude":"66°3'2S","temperature":38,"battery":77,"weight":1074}
+{"id":80,"latitude":"24°56'6E","longitude":"69°18'26N","temperature":24,"battery":14,"weight":3508}

@@ -1,0 +1,2 @@
+[0m[[0m[31merror[0m] [0m[0m[Error] /home/lucas/scala/taxi_drone/server/play-samples-play-scala-hello-world-tutorial/app/views/index.scala.html:35[0m
+[0m[[0m[31merror[0m] [0m[0m}: Expected '}' but found 'EOF'[0m

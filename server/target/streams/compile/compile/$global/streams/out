@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/home/lucas/scala/taxi_drone/server/play-samples-play-scala-hello-world-tutorial/app/controllers/HomeController.scala:34:8: '(' expected but identifier found.[0m
+[0m[[0m[31merror[0m] [0m[0m    if drones.map(_.id).contains(drone.id):[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

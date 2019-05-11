@@ -1,0 +1,36 @@
+@(drones : scala.collection.mutable.MutableList[controllers.Drone])
+
+@main("Welcome") {
+@defining(play.core.PlayVersion.current) { version =>
+
+<section id="content">
+  <div class="wrapper doc">
+    <article>
+      <table>
+        <tbody>
+        <tr>
+          <td> ID </td>
+          <td> longitude </td>
+          <td> latitude </td>
+          <td> temperature </td>
+          <td> battery </td>
+          <td> weight </td>
+        </tr>
+        @for(d <- drones){
+        <tr>
+          <td> @d.id </td>
+          <td> @d.longitude </td>
+          <td> @d.latitude </td>
+          <td> @d.temperature </td>
+          <td> @d.battery </td>
+          <td> @d.weight </td>
+        </tr>
+        }
+        </tbody>
+      </table>
+
+    </article>
+  </div>
+</section>
+}
+}
