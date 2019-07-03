@@ -1,9 +1,15 @@
 package controllers
 
-case class Drone(id: Int, latitude: String, longitude: String, temperature: Int, battery: Int, weight: Int)
+case class Drone(id: Int,
+                 latitude: String,
+                 longitude: String,
+                 temperature: Int,
+                 battery: Int,
+                 weight: Int)
 
 object Drone {
   import play.api.libs.json._
+
   implicit object DroneFormat extends Format[Drone] {
 
     // convert from JSON string to a Stock object (de-serializing from JSON)

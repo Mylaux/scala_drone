@@ -4,7 +4,7 @@
 		module="scala_drone$sources"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20190511215354"
+		publication="20190703162215"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>

@@ -4,7 +4,7 @@
 		module="taxi_drone$sources"
 		revision="1.0"
 		status="integration"
-		publication="20190511172018"
+		publication="20190703162844"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
