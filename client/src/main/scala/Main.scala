@@ -17,6 +17,7 @@ object Main {
 		val req = Http("http://localhost:9000/saveDrone").postData(s).header("Content-type", "application/json").asString.code
 	}
 
+
 	def main(args: Array[String]): Unit = {
 		val paths = args.flatMap(getListOfFiles)
 
@@ -25,13 +26,13 @@ object Main {
 		json_lines.map(println)
 
 		json_lines.map(sendJsonString).toList
-
+/*
 		val csv_paths = paths.filter(f => """.*\.csv$""".r.findFirstIn(f.getName).isDefined)
 		val csv_lines = csv_paths.flatMap(Source.fromFile(_ , "UTF-8").getLines())
 		//csv_lines.map(println)
-
 		val test = csv_paths
 			.map(x => new csvParser(x))
 			.map(x => x.map(x => sendJsonString(Drone.DroneFormat.writes(x).toString())))
+			*/
 	}
 }
