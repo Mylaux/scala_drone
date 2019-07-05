@@ -1,6 +1,7 @@
 import scala.io.Source
 import scalaj.http._
 import java.io.File
+import Simulation._
 
 object Main {
 
@@ -19,9 +20,11 @@ object Main {
 
 
 	def main(args: Array[String]): Unit = {
-		val paths = args.flatMap(getListOfFiles)
+		Init 
 
-		val json_paths = paths.filter(f => """.*\.txt$""".r.findFirstIn(f.getName).isDefined)
+		val files = getListOfFiles("drones")
+
+		val json_paths = files.filter(f => """.*\.json$""".r.findFirstIn(f.getName).isDefined)
 		val json_lines = json_paths.flatMap(Source.fromFile(_ , "UTF-8").getLines())
 		json_lines.map(println)
 

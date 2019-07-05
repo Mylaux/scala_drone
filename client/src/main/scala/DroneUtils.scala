@@ -1,5 +1,6 @@
 import scala.util.Random
 import play.api.libs.json.{JsError, JsSuccess, Json}
+import java.io._
 
 object DroneUtils {
 	
@@ -14,6 +15,8 @@ object DroneUtils {
 	)
 
 	implicit val droneFormat = Json.format[Drone]
+	implicit val droneWrites = Json.writes[Drone]
+
 	val r = new Random
 	
 	val coordinates = Seq('N', 'W', 'E','S')
@@ -52,6 +55,23 @@ object DroneUtils {
 			weight      =  weight
 		)
 	}
+
+	def GenerateMultipleDrones(nb: Int, list: List[Drone]) : List[Drone] = nb match {
+		case 0     => list
+		case nb    => GenerateMultipleDrones(nb - 1, GenerateDrone(nb)::list)
+	}
+
+	def WriteToFile(pathDir: String, drone:Drone): Unit = {
+		val dir = new File(pathDir)
+		if (! dir.exists())
+			dir.mkdir()
+		val pathToFile = pathDir + "drone" + drone.id.toString + ".json"
+		val json = Json.toJson(drone)
+		val pw = new PrintWriter(new File(pathToFile))
+		pw.write(json.toString)
+		pw.close
+	}
+
 
 	/*def createJson(path:String, drone:Drone) = {
 
