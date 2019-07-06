@@ -23,8 +23,8 @@ object DroneUtils {
 	val weight  = 1000
 	val battery = 100
 
-	def StringToDrone(str: String) = Json.parse(str).validate[Drone] match {
-		case JsError(e) 	=> println(e)
+	def StringToDrone(str: String) : TraversableOnce[DroneUtils.Drone] = Json.parse(str).validate[Drone] match {
+		case JsError(e) 	=> None
 		case JsSuccess(t, _) => Some(t)
 	}
 
@@ -61,7 +61,7 @@ object DroneUtils {
 		case nb    => GenerateMultipleDrones(nb - 1, GenerateDrone(nb)::list)
 	}
 
-	def WriteToFile(pathDir: String, drone:Drone): Unit = {
+	def WriteToFile(pathDir: String, drone:Drone) : Unit = {
 		val dir = new File(pathDir)
 		if (! dir.exists())
 			dir.mkdir()

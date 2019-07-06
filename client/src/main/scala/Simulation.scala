@@ -11,9 +11,9 @@ object Simulation {
 	}	
 
 
-	def run(): Unit = {
+	/*def run(): Unit = {
 		while(true) {
 
 		}
-	}
+	}*/
 }

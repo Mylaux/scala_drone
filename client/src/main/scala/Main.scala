@@ -2,6 +2,7 @@ import scala.io.Source
 import scalaj.http._
 import java.io.File
 import Simulation._
+import Hdfs._
 
 object Main {
 
@@ -21,14 +22,17 @@ object Main {
 
 	def main(args: Array[String]): Unit = {
 		Init 
-
+		val drones = DroneByTemperature()
+		PrintRdd(drones, 2)
+		Stop
+		/*
 		val files = getListOfFiles("drones")
 
 		val json_paths = files.filter(f => """.*\.json$""".r.findFirstIn(f.getName).isDefined)
 		val json_lines = json_paths.flatMap(Source.fromFile(_ , "UTF-8").getLines())
 		json_lines.map(println)
-
 		json_lines.map(sendJsonString).toList
+		*/
 /*
 		val csv_paths = paths.filter(f => """.*\.csv$""".r.findFirstIn(f.getName).isDefined)
 		val csv_lines = csv_paths.flatMap(Source.fromFile(_ , "UTF-8").getLines())
