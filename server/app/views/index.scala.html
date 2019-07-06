@@ -10,20 +10,24 @@
         <tbody>
         <tr>
           <td> ID </td>
+          <td> is_working </td>
           <td> longitude </td>
           <td> latitude </td>
           <td> temperature </td>
           <td> battery </td>
           <td> weight </td>
+          <td> is_occupied </td>
         </tr>
         @for(d <- drones){
         <tr>
           <td> @d.id </td>
+          <td> @d.is_working </td>
           <td> @d.longitude </td>
           <td> @d.latitude </td>
           <td> @d.temperature </td>
           <td> @d.battery </td>
           <td> @d.weight </td>
+          <td> @d.is_occupied </td>
         </tr>
         }
         </tbody>
