@@ -1,4 +1,0 @@
-{"id":34,"latitude":"64°3'41N","longitude":"63°9'48W","temperature":6,"battery":91,"weight":1857}
-{"id":89,"latitude":"48°9'6N","longitude":"13°34'54S","temperature":3,"battery":37,"weight":3870}
-{"id":10,"latitude":"77°8'42S","longitude":"39°25'39S","temperature":18,"battery":85,"weight":2048}
-{"id":90,"latitude":"12°38'49E","longitude":"45°36'53N","temperature":46,"battery":93,"weight":2602}

@@ -1,1 +1,0 @@
-{"id":22,"latitude":"6°14'35W","longitude":"77°54'5W","temperature":26,"battery":7,"weight":1740}
