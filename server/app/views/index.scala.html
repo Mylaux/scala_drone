@@ -1,4 +1,4 @@
-@(drones : scala.collection.mutable.MutableList[controllers.Drone])
+@(drones : scala.collection.mutable.MutableList[controllers.Drone], nb_failures: Int, nb_clients: Int)
 
 @main("Welcome") {
 @defining(play.core.PlayVersion.current) { version =>
@@ -32,7 +32,12 @@
         }
         </tbody>
       </table>
-
+      <div>
+        <br>
+        Count failures : @nb_failures
+        <br>
+        Count clients : @nb_clients
+      </div>
     </article>
   </div>
 </section>

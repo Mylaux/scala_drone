@@ -10,6 +10,9 @@ import play.api.libs.json.Json
  * application's home page.
  */
 
+
+
+
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   /**
@@ -23,7 +26,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   val drones = scala.collection.mutable.MutableList[Drone]()
 
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(drones))
+    Ok(views.html.index(drones, 0, 0))
   }
 
   def saveDrone = Action { request =>
@@ -39,5 +42,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
     println(drones)
     Ok
+  }
+
+  def saveValues = Action { request =>
+    val json = request.body.asJson.get
+    val nb_failures = (json \ "nb_failures").as[Int]
+    val nb_clients = (json \ "nb_clients").as[Int]
+
+    Ok(views.html.index(drones, nb_failures, nb_clients))
   }
 }

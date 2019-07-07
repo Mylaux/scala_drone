@@ -14,6 +14,10 @@ object Simulation {
 		val req = Http("http://localhost:9000/saveDrone").postData(s).header("Content-type", "application/json").asString.code
 	}
 
+	def sendValuesToServer(s: String): Any = {
+		val req = Http("http://localhost:9000/saveValues").postData(s).header("Content-type", "application/json").asString.code
+	}
+
 	def getListOfFiles(dir: String):List[File] = {
 		val d = new File(dir)
 		if (d.exists && d.isDirectory) {
@@ -31,19 +35,27 @@ object Simulation {
 		json_lines.map(sendJsonString).toList
 	}
 
-	
 	def init(): Unit = {
 		val drones = generateMultipleDrones(nb, Nil)
 		drones.foreach{drone => writeToFile(path, drone)}
-	}	
+	}
 
 
 	def run(): Unit = {
 		while(true) {
 			val rdd  = loadData("drones")
 			val nrdd = rdd.map(drone => updateDrone(drone))
+
+			val values = "{" +
+				"nb_failure: " + nrdd.filter(d => d.is_working == false).count() +
+				"nb_clients: " + nrdd.filter(d => d.is_occupied == true).count() +
+				"}"
+
 			nrdd.collect().foreach{drone => writeToFile(path, drone)}
+
 			sendToServer(path)
+			sendValuesToServer(values)
+
 			Thread.sleep(batchtime)
 		}
 	}
