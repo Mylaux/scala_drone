@@ -6,11 +6,13 @@ object DroneUtils {
 	
 	case class Drone(
 		id: 		 Int,
+		is_working:  Boolean,
 		latitude: 	 String,
 		longitude:	 String,
 		temperature: Int,
 		battery:     Int,
-		weight:      Int
+		weight:      Int,
+		is_occupied: Boolean
 
 	)
 
@@ -31,6 +33,8 @@ object DroneUtils {
 	def GenerateDrone(id:Int) : Drone = {
 
 		// Randomise the Drone
+		val is_working   = true
+
 		val latitude_r1  = r.nextInt(90)
 		val latitude_r2  = r.nextInt(60)
 		val latitude_r3  = r.nextInt(59)
@@ -46,13 +50,17 @@ object DroneUtils {
 			case _   => -10
 		}
 
+		val is_occupied = false
+
 		Drone(
-			id          = id, 
+			id          = id,
+			is_working  = is_working,
 			latitude    = latitude_r1  + "°" + latitude_r2  + "'" + latitude_r3  + latitude_c,
 			longitude   = longitude_r1 + "°" + longitude_r2 + "'" + longitude_r3 + longitude_c,
 			temperature = temperature,
 			battery     = battery,
-			weight      =  weight
+			weight      = weight,
+			is_occupied = is_occupied
 		)
 	}
 
@@ -71,9 +79,4 @@ object DroneUtils {
 		pw.write(json.toString)
 		pw.close
 	}
-
-
-	/*def createJson(path:String, drone:Drone) = {
-
-	}*/
 }
