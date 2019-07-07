@@ -25,12 +25,12 @@ object DroneUtils {
 	val weight  = 1000
 	val battery = 100
 
-	def StringToDrone(str: String) : TraversableOnce[DroneUtils.Drone] = Json.parse(str).validate[Drone] match {
+	def stringToDrone(str: String) : TraversableOnce[DroneUtils.Drone] = Json.parse(str).validate[Drone] match {
 		case JsError(e) 	=> None
 		case JsSuccess(t, _) => Some(t)
 	}
 
-	def GenerateDrone(id:Int) : Drone = {
+	def generateDrone(id:Int) : Drone = {
 
 		// Randomise the Drone
 		val is_working   = true
@@ -64,12 +64,32 @@ object DroneUtils {
 		)
 	}
 
-	def GenerateMultipleDrones(nb: Int, list: List[Drone]) : List[Drone] = nb match {
+	def generateMultipleDrones(nb: Int, list: List[Drone]) : List[Drone] = nb match {
 		case 0     => list
-		case nb    => GenerateMultipleDrones(nb - 1, GenerateDrone(nb)::list)
+		case nb    => generateMultipleDrones(nb - 1, generateDrone(nb)::list)
 	}
 
-	def WriteToFile(pathDir: String, drone:Drone) : Unit = {
+	def updateDrone(drone: Drone) : Drone = {
+
+		val is_occupied_r = r.nextInt(100)
+		val is_occupied = is_occupied_r match {
+			case x if x < 10 => true
+			case _ => false
+		}
+
+		Drone(
+			id          = drone.id,
+			is_working  = drone.is_working,
+			latitude    = drone.latitude,
+			longitude   = drone.longitude,
+			temperature = drone.temperature,
+			battery     = drone.battery-1,
+			weight      = drone.weight,
+			is_occupied = is_occupied
+		)
+	}
+
+	def writeToFile(pathDir: String, drone:Drone) : Unit = {
 		val dir = new File(pathDir)
 		if (! dir.exists())
 			dir.mkdir()
