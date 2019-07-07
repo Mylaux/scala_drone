@@ -16,4 +16,3 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming" % "2.4.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.4.0"
-
