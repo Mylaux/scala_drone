@@ -26,7 +26,7 @@ object DroneUtils {
 	val battery = 100
 
 	def stringToDrone(str: String) : TraversableOnce[DroneUtils.Drone] = Json.parse(str).validate[Drone] match {
-		case JsError(e) 	=> None
+		case JsError(e) 	 => None
 		case JsSuccess(t, _) => Some(t)
 	}
 
@@ -45,9 +45,12 @@ object DroneUtils {
 		val longitude_r3 = r.nextInt(59)
 		val longitude_c  = coordinates(r.nextInt(coordinates.length))
 
-		val temperature = latitude_c match {
-			case 'N' => 100
-			case _   => -10
+		val cold_r = r.nextInt(15) - 10
+		val hot_r  = r.nextInt(25) + 10
+
+		val temperature = latitude_r1 match {
+			case x if x > 60 => cold_r
+			case _           => hot_r
 		}
 
 		val is_occupied = false
@@ -69,22 +72,64 @@ object DroneUtils {
 		case nb    => generateMultipleDrones(nb - 1, generateDrone(nb)::list)
 	}
 
+	def updateCoord(coord: String): String = {
+		val coords = coord.split("[°']")
+		val coord_1 = coords(0).toInt + r.nextInt(3) - 1
+		val coord_2 = coords(1).toInt + r.nextInt(3) - 1
+		coord_1.toString  + "°" + coord_2.toString  + "'" + coords(2)
+	}
+
 	def updateDrone(drone: Drone) : Drone = {
 
-		val is_occupied_r = r.nextInt(100)
-		val is_occupied = is_occupied_r match {
-			case x if x < 10 => true
-			case _ => false
+		val is_working_r  = r.nextInt(100)
+		val is_working    = is_working_r match {
+			case x if x < 2 | drone.battery < 5 => false
+			case _                              => true
 		}
 
+		val latitudep = is_working match {
+			case true => updateCoord(drone.latitude)
+			case _    => drone.latitude
+		}
+
+		val longitudep = is_working match {
+			case true => updateCoord(drone.longitude)
+			case _    => drone.longitude
+		}
+
+
+
+		val is_occupied_r = r.nextInt(100)
+		val is_occupied   = (drone.is_occupied, is_occupied_r, is_working) match {
+			case (_, _, false)            => false
+			case (false, x, _) if x < 10  => true
+			case (true,  x, _) if x < 20  => false
+			case _ => drone.is_occupied 
+		}
+
+		val weight_r      = 40 + r.nextInt(70)
+		val weightp       = (is_occupied, drone.weight) match {
+			case (true, 1000) => drone.weight + weight_r
+			case (false, _)   => weight
+			case _            => drone.weight
+		}
+
+		val battery_loss  = r.nextInt(2)
+		val batteryp      = drone.battery match {
+			case x if x > -5 & x < 1 => battery
+			case _                   => drone.battery - battery_loss
+		}
+
+		val temperature_r = r.nextInt(3) - 1
+		val temperature   = drone.temperature + temperature_r  
 		Drone(
 			id          = drone.id,
-			is_working  = drone.is_working,
-			latitude    = drone.latitude,
-			longitude   = drone.longitude,
-			temperature = drone.temperature,
-			battery     = drone.battery-1,
-			weight      = drone.weight,
+			is_working  = is_working,
+			latitude    = latitudep,
+			longitude   = longitudep,
+			temperature = temperature,
+			battery     = batteryp,
+			weight      = weightp,
 			is_occupied = is_occupied
 		)
 	}
