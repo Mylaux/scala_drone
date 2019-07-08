@@ -4,9 +4,6 @@ import javax.inject._
 import play.api._
 import play.api.mvc._
 import play.api.libs.json.Json
-import org.apache.spark.SparkConf
-import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.apache.spark.sql.functions._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -45,7 +42,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     else {
       drones.++=(List(drone))
     }
-    
     Ok
   }
 

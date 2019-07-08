@@ -4,7 +4,7 @@
 		module="play-scala-seed_2.12"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20190703190929"
+		publication="20190708080055"
 	>
 		<description>
 		play-scala-seed
@@ -53,7 +53,9 @@
 		<dependency org="com.typesafe.play" name="filters-helpers_2.12" rev="2.7.2" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.play" name="play-guice_2.12" rev="2.7.2" conf="compile->default(compile)"/>
 		<dependency org="org.scalatestplus.play" name="scalatestplus-play_2.12" rev="4.0.2" conf="test->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-core_2.12" rev="2.3.0" conf="compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-sql_2.12" rev="2.3.0" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-core_2.12" rev="2.4.0" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-streaming_2.12" rev="2.4.0" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-streaming-kafka-0-10_2.12" rev="2.4.0" conf="compile->default(compile)"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-databind" matcher="exact" rev="2.6.7"/>
 	</dependencies>
 </ivy-module>
