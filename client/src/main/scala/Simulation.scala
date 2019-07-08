@@ -1,12 +1,12 @@
 import scala.io.Source
 import scalaj.http._
 import java.io.File
+import AgregUtils._
 import DroneUtils._
 import Hdfs._
 
 object Simulation {
 
-	val nb = 10
 	val path = "drones/"
 	val batchtime = 1000
 
@@ -35,7 +35,7 @@ object Simulation {
 		json_lines.map(sendJsonString).toList
 	}
 
-	def init(): Unit = {
+	def init(nb: Int): Unit = {
 		val drones = generateMultipleDrones(nb, Nil)
 		drones.foreach{drone => writeToFile(path, drone)}
 	}
@@ -46,12 +46,14 @@ object Simulation {
 			val rdd  = loadData("drones")
 			val nrdd = rdd.map(drone => updateDrone(drone))
 
-			val values = "{" +
-				"nb_failure: " + nrdd.filter(d => d.is_working == false).count() +
-				"nb_clients: " + nrdd.filter(d => d.is_occupied == true).count() +
-				"}"
+			val nb_failure =  nrdd.filter(d => d.is_working == false).count().toInt 
+			val nb_clients =  nrdd.filter(d => d.is_occupied == true).count().toInt
+
 
 			nrdd.collect().foreach{drone => writeToFile(path, drone)}
+
+			val agreg  = Agregation(nb_failure, nb_clients)
+			val values = agregToJson(agreg)
 
 			sendToServer(path)
 			sendValuesToServer(values)

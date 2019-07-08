@@ -23,14 +23,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
 
+  var nb_failures = 0
+  var nb_clients = 0
   val drones = scala.collection.mutable.MutableList[Drone]()
 
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(drones, 0, 0))
+    Ok(views.html.index(drones, nb_failures, nb_clients))
   }
 
   def saveDrone = Action { request =>
-    println("Post request received")
+    println("Post request received: Drones")
     val json = request.body.asJson.get
     val drone = json.as[Drone]
 
@@ -40,14 +42,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     else {
       drones.++=(List(drone))
     }
-    println(drones)
     Ok
   }
 
   def saveValues = Action { request =>
-    val json = request.body.asJson.get
-    val nb_failures = (json \ "nb_failures").as[Int]
-    val nb_clients = (json \ "nb_clients").as[Int]
+    println("Post request received: Agreg")
+    val json  = request.body.asJson.get
+    val agreg = json.as[Agregation]
+
+    nb_failures = agreg.nb_failures
+    nb_clients  = agreg.nb_clients
 
     Ok(views.html.index(drones, nb_failures, nb_clients))
   }
