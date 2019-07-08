@@ -1,9 +1,0 @@
-{"id":76,"latitude":"90°34'38E","longitude":"25°10'9E","temperature":25,"battery":76,"weight":2279}
-{"id":80,"latitude":"20°31'21S","longitude":"46°57'46S","temperature":17,"battery":80,"weight":3533}
-{"id":82,"latitude":"75°16'19N","longitude":"39°12'27E","temperature":19,"battery":4,"weight":2246}
-{"id":35,"latitude":"1°56'13N","longitude":"57°16'17S","temperature":24,"battery":83,"weight":2381}
-{"id":80,"latitude":"1°10'30W","longitude":"41°11'29S","temperature":16,"battery":63,"weight":1769}
-{"id":75,"latitude":"50°5'13S","longitude":"74°36'24E","temperature":19,"battery":6,"weight":3271}
-{"id":66,"latitude":"36°48'21W","longitude":"49°7'14W","temperature":5,"battery":51,"weight":1999}
-{"id":85,"latitude":"84°13'26W","longitude":"82°4'44W","temperature":13,"battery":100,"weight":3769}
-{"id":39,"latitude":"30°31'58E","longitude":"2°49'44E","temperature":12,"battery":16,"weight":3474}

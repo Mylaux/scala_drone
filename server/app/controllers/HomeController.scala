@@ -13,6 +13,9 @@ import org.apache.spark.sql.functions._
  * application's home page.
  */
 
+
+
+
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   /**
@@ -23,14 +26,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
 
+  var nb_failures = 0
+  var nb_clients = 0
   val drones = scala.collection.mutable.MutableList[Drone]()
 
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(drones))
+    Ok(views.html.index(drones, nb_failures, nb_clients))
   }
 
   def saveDrone = Action { request =>
-    println("Post request received")
+    println("Post request received: Drones")
     val json = request.body.asJson.get
     val drone = json.as[Drone]
 
@@ -40,9 +45,18 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     else {
       drones.++=(List(drone))
     }
-    println(drones)
-
-
+    
     Ok
+  }
+
+  def saveValues = Action { request =>
+    println("Post request received: Agreg")
+    val json  = request.body.asJson.get
+    val agreg = json.as[Agregation]
+
+    nb_failures = agreg.nb_failures
+    nb_clients  = agreg.nb_clients
+
+    Ok(views.html.index(drones, nb_failures, nb_clients))
   }
 }
