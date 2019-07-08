@@ -7,7 +7,6 @@ import Hdfs._
 
 object Simulation {
 
-	val path = "drones/"
 	val batchtime = 1000
 
 	def sendJsonString(s: String): Any = {
@@ -35,22 +34,31 @@ object Simulation {
 		json_lines.map(sendJsonString).toList
 	}
 
-	def init(nb: Int): Unit = {
+	def init(nb: Int, path: String): Unit = {
+		val paths = path match {
+			case x if x.takeRight(1) == '/' => x
+			case x => x + "/"
+		}
 		val drones = generateMultipleDrones(nb, Nil)
-		drones.foreach{drone => writeToFile(path, drone)}
+		drones.foreach{drone => writeToFile(paths, drone)}
 	}
 
 
-	def run(): Unit = {
+	def run(path:String): Unit = {
+		val paths = path match {
+			case x if x.takeRight(1) == '/' => x
+			case x => x + "/"
+		}
+
 		while(true) {
-			val rdd  = loadData("drones")
+			val rdd  = loadData(paths)
 			val nrdd = rdd.map(drone => updateDrone(drone))
 
 			val nb_failure =  nrdd.filter(d => d.is_working == false).count().toInt 
 			val nb_clients =  nrdd.filter(d => d.is_occupied == true).count().toInt
 
 
-			nrdd.collect().foreach{drone => writeToFile(path, drone)}
+			nrdd.collect().foreach{drone => writeToFile(paths, drone)}
 
 			val agreg  = Agregation(nb_failure, nb_clients)
 			val values = agregToJson(agreg)
