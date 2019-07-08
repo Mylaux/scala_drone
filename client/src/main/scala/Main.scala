@@ -3,14 +3,20 @@ import Hdfs._
 
 object Main {
 
-	def main(args: Array[String]): Unit = {
-		/*if (args.length < 2) {
-			System.err.println("Usage: NetworkWordCount <hostname> <port>")
-			System.exit(1)
-		}*/
-		init
-		run
+	def errUsage(msg: String) : Unit = {
+		System.err.println(msg)
+		System.exit(1)
+	}
 
+	def main(args: Array[String]): Unit = {
+		args match {
+			case x if x.length == 0 => errUsage("Usage: init <nb_Drones> <path> | run")
+				case x if x(0) == "start" => run
+			case x if x(0) == "init" & x.length != 2 => errUsage("Usage: init <nb_Drones>")
+			case x if x(0) == "init" & x(1).toInt < 0 => errUsage("<nb_Drones> must be positive")
+			case x if x(0) == "init" => init(x(1).toInt)
+			case x => println(x(0))
+		}
 
 /*
 		val csv_paths = paths.filter(f => """.*\.csv$""".r.findFirstIn(f.getName).isDefined)
